@@ -21,33 +21,33 @@ class MovieHorizontal extends StatelessWidget {
   }
 
   List<Widget> _cards(BuildContext context) {
-    return movies
-        .map(
-          (movie) => Container(
-                margin: EdgeInsets.only(right: 15),
-                child: Column(
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: FadeInImage(
-                        image: NetworkImage(movie.getPosterImg()),
-                        placeholder: AssetImage('assets/img/no-image.jpg'),
-                        fit: BoxFit.cover,
-                        height: 160,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      movie.title,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ],
-                ),
-              ),
-        )
-        .toList();
+    return movies.map((movie) => _createCard(movie, context)).toList();
+  }
+
+  Widget _createCard(Movie movie, BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 15),
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: FadeInImage(
+              image: NetworkImage(movie.getPosterImg()),
+              placeholder: AssetImage('assets/img/no-image.jpg'),
+              fit: BoxFit.cover,
+              height: 160,
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            movie.title,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
+      ),
+    );
   }
 }
