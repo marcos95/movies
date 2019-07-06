@@ -50,16 +50,25 @@ class Movie {
     voteCount = json['vote_count'];
     id = json['id'];
     video = json['video'];
-    voteAverage = json['vote_average'];
+    voteAverage = json['vote_average'] / 1;
     title = json['title'];
-    popularity = json['popularity'];
-    posterPath = json['posterPath'];
+    popularity = json['popularity'] / 1;
+    posterPath = json['poster_path'];
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
-    genreIds = json['genre_ids'];
+    genreIds = json['genre_ids'].cast<int>();
     backdropPath = json['backdrop_path'];
     adult = json['adult'];
     overview = json['overview'];
     releaseDate = json['release_date'];
+  }
+
+  getPosterImg() {
+    if (posterPath == null) {
+      return 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png';
+    } else {
+      print('https://image.tmdb.org/t/p/w500/$posterPath');
+      return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
   }
 }
