@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:peliculas/src/models/movie_model.dart';
 import 'package:peliculas/src/providers/movie_provider.dart';
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
 
@@ -22,15 +23,42 @@ class HomePage extends StatelessWidget {
       ),
       body: Container(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            _swiperTarjetas(),
+            _swiperCards(),
+            _footer(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _swiperTarjetas() {
+  Widget _footer(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: <Widget>[
+          Text(
+            'Populares',
+            style: Theme.of(context).textTheme.subhead,
+          ),
+          FutureBuilder(
+            future: _movieProvider.getPopular(),
+            builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
+              if (snapshot.hasData) {
+                print(snapshot.data);
+                return Container();
+              } else {
+                return Container();
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _swiperCards() {
     return FutureBuilder(
       future: _movieProvider.getNowPlaying(),
       builder: (context, AsyncSnapshot<List> snapshot) {
