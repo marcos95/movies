@@ -42,7 +42,7 @@ class Actor {
 
   String getPhoto() {
     if (profilePath == null) {
-      return 'https://appfollow.io/assets/2/img/team/no-avatar.png';
+      return 'https://live.warthunder.com/style/img/no_avatar.jpg';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$profilePath';
     }
