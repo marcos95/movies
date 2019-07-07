@@ -21,16 +21,13 @@ class MovieHorizontal extends StatelessWidget {
 
     return Container(
       height: _screenSize.height * .25,
-      child: PageView(
+      child: PageView.builder(
         pageSnapping: false,
         controller: _pageController,
-        children: _cards(context),
+        itemCount: movies.length,
+        itemBuilder: (context, index) => _createCard(movies[index], context),
       ),
     );
-  }
-
-  List<Widget> _cards(BuildContext context) {
-    return movies.map((movie) => _createCard(movie, context)).toList();
   }
 
   Widget _createCard(Movie movie, BuildContext context) {
