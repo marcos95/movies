@@ -38,7 +38,7 @@ class MovieDetail extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: Text(
-          movie.title,
+          movie.title + 'prueba',
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -59,11 +59,14 @@ class MovieDetail extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image(
-              image: NetworkImage(movie.getPosterImg()),
-              height: 150,
+          Hero(
+            tag: movie.id,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image(
+                image: NetworkImage(movie.getPosterImg()),
+                height: 150,
+              ),
             ),
           ),
           SizedBox(
