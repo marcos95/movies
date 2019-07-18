@@ -38,7 +38,7 @@ class MovieDetail extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: Text(
-          movie.title + 'prueba',
+          movie.title,
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -47,7 +47,7 @@ class MovieDetail extends StatelessWidget {
         background: FadeInImage(
           image: NetworkImage(movie.getBackgroundImg()),
           placeholder: AssetImage('assets/img/loading.gif'),
-          fadeInDuration: Duration(microseconds: 150),
+          fadeInDuration: Duration(seconds: 1),
           fit: BoxFit.cover,
         ),
       ),
