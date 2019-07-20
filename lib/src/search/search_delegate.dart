@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/movie_model.dart';
+import 'package:peliculas/src/providers/movie_provider.dart';
 
 class DataSearch extends SearchDelegate {
   String selection = '';
-
-  final movies = [
-    'Interestelar',
-    'Drive',
-    'Prueba',
-    'Origen',
-    'Capital america',
-    'Spiderman'
-  ];
-  final newMovies = ['Spiderman', 'Capital america'];
+  final movieProvider = MovieProvider();
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -52,24 +45,44 @@ class DataSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestList = (query.isEmpty)
-        ? newMovies
-        : movies
-            .where(
-                (movie) => movie.toLowerCase().startsWith(query.toLowerCase()))
-            .toList();
+    if (query.isEmpty) {
+      return Container();
+    }
 
-    return ListView.builder(
-      itemCount: suggestList.length,
-      itemBuilder: (c, i) {
-        return ListTile(
-          leading: Icon(Icons.movie),
-          title: Text(suggestList[i]),
-          onTap: () {
-            selection = suggestList[i];
-            showResults(context);
-          },
-        );
+    return FutureBuilder<List<Movie>>(
+      future: movieProvider.searchMovie(query),
+      builder: (ctx, snapshot) {
+        final movies = snapshot.data;
+
+        if (snapshot.hasData) {
+          return ListView(
+              children: movies.map(
+            (movie) {
+              movie.uniqueId = 'search-${movie.id}';
+              return Hero(
+                child: ListTile(
+                  leading: FadeInImage(
+                    image: NetworkImage(movie.getPosterImg()),
+                    placeholder: AssetImage('assets/img/no-image.jpg'),
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text(movie.title),
+                  subtitle: Text(movie.originalTitle),
+                  onTap: () {
+                    close(context, null);
+                    Navigator.pushNamed(context, 'detail', arguments: movie);
+                  },
+                ),
+                tag: movie.uniqueId,
+              );
+            },
+          ).toList());
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }
